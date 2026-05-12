@@ -4,10 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScoreRingCompact } from "@/components/score-ring";
-import { CLAIMS } from "@/lib/mock-data";
+import { listClaims } from "@/lib/store";
 import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/table";
 import type { ClaimStatus, Claim } from "@/types";
 import { formatCurrency, formatDate } from "@/lib/utils";
+
+export const dynamic = "force-dynamic";
 
 const COLUMNS: { id: ClaimStatus; label: string }[] = [
   { id: "intake", label: "Intake" },
@@ -20,6 +22,7 @@ const COLUMNS: { id: ClaimStatus; label: string }[] = [
 ];
 
 export default function ClaimsPipelinePage() {
+  const CLAIMS = listClaims();
   return (
     <div className="container-page py-8">
       <div className="flex items-center justify-between">

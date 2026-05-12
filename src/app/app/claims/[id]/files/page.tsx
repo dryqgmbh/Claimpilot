@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/table";
-import { getClaim } from "@/lib/mock-data";
+import { getClaimById as getClaim } from "@/lib/store";
 import { formatDate } from "@/lib/utils";
 
 const ICON = {

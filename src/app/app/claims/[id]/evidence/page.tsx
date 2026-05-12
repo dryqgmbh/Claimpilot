@@ -3,7 +3,7 @@ import { CheckCircle2, XCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { RiskBadge } from "@/components/ui/risk-badge";
-import { getClaim } from "@/lib/mock-data";
+import { getClaimById as getClaim } from "@/lib/store";
 
 export default async function EvidenceTab({
   params,

@@ -2,10 +2,13 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/table";
-import { CLAIMS } from "@/lib/mock-data";
+import { listClaims } from "@/lib/store";
 import { formatDate } from "@/lib/utils";
 
+export const dynamic = "force-dynamic";
+
 export default function GlobalTasksPage() {
+  const CLAIMS = listClaims();
   const tasks = CLAIMS.flatMap((c) =>
     c.tasks.map((t) => ({ ...t, claim: c })),
   );

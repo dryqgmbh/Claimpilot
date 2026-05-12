@@ -3,12 +3,14 @@ import { ArrowUpRight, AlertTriangle, ListChecks, Clock, FileText } from "lucide
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScoreRingCompact } from "@/components/score-ring";
-import { CLAIMS } from "@/lib/mock-data";
-import { aggregate } from "@/lib/scoring";
+import { listClaims } from "@/lib/store";
+
+export const dynamic = "force-dynamic";
 
 export default function DashboardPage() {
+  const CLAIMS = listClaims();
   const avgScore = Math.round(
-    CLAIMS.reduce((acc, c) => acc + c.score, 0) / CLAIMS.length,
+    CLAIMS.reduce((acc, c) => acc + c.score, 0) / Math.max(1, CLAIMS.length),
   );
   const openTasks = CLAIMS.flatMap((c) => c.tasks).filter(
     (t) => t.status !== "done",

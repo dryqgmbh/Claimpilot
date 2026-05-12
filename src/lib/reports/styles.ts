@@ -1,0 +1,153 @@
+import { StyleSheet } from "@react-pdf/renderer";
+
+export const colors = {
+  navy: "#0B1220",
+  slate: "#1E293B",
+  bg: "#F8FAFC",
+  border: "#E2E8F0",
+  text: "#111827",
+  muted: "#475569",
+  brand: "#2563EB",
+  success: "#16A34A",
+  warning: "#F59E0B",
+  risk: "#DC2626",
+};
+
+export const styles = StyleSheet.create({
+  page: {
+    paddingTop: 48,
+    paddingBottom: 56,
+    paddingHorizontal: 48,
+    fontFamily: "Helvetica",
+    color: colors.text,
+    fontSize: 10,
+    lineHeight: 1.5,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+    paddingBottom: 16,
+    marginBottom: 24,
+  },
+  brand: {
+    fontSize: 14,
+    fontFamily: "Helvetica-Bold",
+    color: colors.navy,
+  },
+  brandDot: {
+    color: colors.brand,
+  },
+  metaRight: {
+    textAlign: "right",
+    fontSize: 9,
+    color: colors.muted,
+  },
+  title: {
+    fontSize: 22,
+    fontFamily: "Helvetica-Bold",
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 11,
+    color: colors.muted,
+    marginBottom: 16,
+  },
+  section: {
+    marginTop: 16,
+  },
+  sectionTitle: {
+    fontSize: 12,
+    fontFamily: "Helvetica-Bold",
+    textTransform: "uppercase",
+    letterSpacing: 0.6,
+    color: colors.muted,
+    marginBottom: 8,
+  },
+  card: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 6,
+    padding: 12,
+    marginBottom: 8,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 4,
+  },
+  body: {
+    fontSize: 10,
+    lineHeight: 1.55,
+  },
+  bodyBold: {
+    fontSize: 10,
+    fontFamily: "Helvetica-Bold",
+  },
+  small: {
+    fontSize: 9,
+    color: colors.muted,
+  },
+  scoreBig: {
+    fontSize: 48,
+    fontFamily: "Helvetica-Bold",
+  },
+  badge: {
+    fontSize: 8,
+    fontFamily: "Helvetica-Bold",
+    paddingVertical: 2,
+    paddingHorizontal: 6,
+    borderRadius: 3,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  badgeSuccess: { backgroundColor: "#DCFCE7", color: colors.success },
+  badgeWarning: { backgroundColor: "#FEF3C7", color: colors.warning },
+  badgeRisk: { backgroundColor: "#FEE2E2", color: colors.risk },
+  badgeNeutral: { backgroundColor: "#F1F5F9", color: colors.slate },
+  table: {
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 6,
+    overflow: "hidden",
+  },
+  tableHead: {
+    flexDirection: "row",
+    backgroundColor: colors.bg,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  tableRow: {
+    flexDirection: "row",
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  th: {
+    fontFamily: "Helvetica-Bold",
+    fontSize: 8,
+    color: colors.muted,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+  },
+  td: {
+    fontSize: 9,
+  },
+  footer: {
+    position: "absolute",
+    bottom: 24,
+    left: 48,
+    right: 48,
+    fontSize: 8,
+    color: colors.muted,
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    paddingTop: 8,
+    textAlign: "center",
+  },
+});

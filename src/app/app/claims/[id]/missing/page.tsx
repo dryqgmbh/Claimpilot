@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { RiskBadge } from "@/components/ui/risk-badge";
 import { Button } from "@/components/ui/button";
-import { getClaim } from "@/lib/mock-data";
+import { getClaimById as getClaim } from "@/lib/store";
 import { formatDate } from "@/lib/utils";
 
 const CAT_ICON = {

@@ -44,7 +44,7 @@ export default function NewClaimPage() {
         </Link>
       </div>
 
-      <form action="/app/claims/C-2026-00148" className="mt-8 grid gap-6 lg:grid-cols-3">
+      <form action="/app/audit/C-2026-00148" className="mt-8 grid gap-6 lg:grid-cols-3">
         <Card className="p-6 lg:col-span-2">
           <h2 className="text-[15px] font-semibold">Claim details</h2>
           <p className="text-[12px] text-app-muted">

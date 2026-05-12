@@ -3,7 +3,7 @@ import { AlertTriangle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, THead, TBody, TR, TH, TD } from "@/components/ui/table";
-import { getClaim } from "@/lib/mock-data";
+import { getClaimById as getClaim } from "@/lib/store";
 import { formatDate } from "@/lib/utils";
 
 export default async function LogsTab({

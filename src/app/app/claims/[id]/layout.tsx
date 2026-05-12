@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ChevronLeft, RotateCw, Download } from "lucide-react";
+import { ChevronLeft, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScoreRing } from "@/components/score-ring";
 import { Tabs } from "@/components/ui/tabs";
-import { getClaim } from "@/lib/mock-data";
+import { getClaimById } from "@/lib/store";
+import { ReanalyzeButton } from "@/components/claim/reanalyze-button";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 export default async function ClaimDetailLayout({
@@ -16,7 +17,7 @@ export default async function ClaimDetailLayout({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const claim = getClaim(id);
+  const claim = getClaimById(id);
   if (!claim) notFound();
 
   const tabBase = `/app/claims/${claim.id}`;
@@ -101,9 +102,7 @@ export default async function ClaimDetailLayout({
             <Meta label="Updated" value={formatDate(claim.updated_at)} />
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-2">
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <RotateCw className="h-3.5 w-3.5" /> Re-analyze
-            </Button>
+            <ReanalyzeButton claimId={claim.id} />
             <Link href={`/app/claims/${claim.id}/reports`}>
               <Button size="sm" className="gap-1.5">
                 <Download className="h-3.5 w-3.5" /> Generate report

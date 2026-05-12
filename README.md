@@ -136,17 +136,56 @@ UI primitives in `src/components/ui/`: `Button`, `Card`, `Badge`, `Table`,
 These are part of the v1 backend / future modules:
 
 - Real auth (Clerk/Supabase) — forms currently route to next page
-- Real database (Postgres + pgvector) — replaced by `mock-data.ts`
-- File upload to S3 / Supabase Storage
-- AI orchestration (Claude / Vision / Textract pipelines)
+- Real database (Postgres + pgvector) — replaced by an in-process store
+  (`src/lib/store.ts`); same read/write API as a real DB layer would expose
+- File upload to durable storage (S3 / Supabase Storage) — current endpoint
+  registers metadata + classifies the file, no bytes are persisted
+- Vision / Textract parsing for photos and Xactimate PDFs
 - Stripe checkout integration
-- PDF report rendering (Playwright)
-- Background jobs (Inngest / Trigger.dev)
+- Background jobs (Inngest / Trigger.dev) — audit currently runs in-process
 - Integrations (CompanyCam, Encircle, DASH)
 - Mobile app
 
 The data model and component contracts are designed so each of these can be
 wired in without restructuring the frontend.
+
+## AI pipeline
+
+The audit pipeline is implemented end-to-end:
+
+- **Schemas** — Zod schemas for classifier, auditor and verifier outputs
+  (`src/lib/ai/schemas.ts`)
+- **Prompts** — system prompts with hard guardrails plus JSON Schemas for
+  Anthropic tool use (`src/lib/ai/prompts.ts`)
+- **Client** — Anthropic SDK with model routing (Haiku classifier, Sonnet
+  auditor, Opus verifier) plus a deterministic mock fallback when
+  `ANTHROPIC_API_KEY` is unset (`src/lib/ai/client.ts`)
+- **Orchestrator** — drives the audit: parsing → matching → scoring →
+  verifying → done. Critical findings are re-verified by Opus and degraded
+  to `needs review` if not supported (`src/lib/ai/orchestrator.ts`)
+- **Progress UI** — `/app/audit/[id]` polls `/api/claims/[id]/audit` in real
+  time and redirects to the claim detail when the score is ready
+- **API routes**
+  - `POST /api/claims` — create a claim
+  - `GET  /api/claims` — list claims
+  - `GET  /api/claims/[id]` — fetch a single claim
+  - `POST /api/claims/[id]/files` — upload + classify files
+  - `POST /api/claims/[id]/audit` — kick off an audit
+  - `GET  /api/claims/[id]/audit` — poll audit job status
+  - `GET  /api/claims/[id]/reports/[kind]` — render a PDF report
+
+## PDF reports
+
+Three report types are rendered server-side with `@react-pdf/renderer`:
+
+- `claim_qa` — full claim QA report (sub-scores, top findings, missing
+  docs, adjuster forecast) — typically 2 pages
+- `missing_docs` — open documentation grouped by assignee
+- `adjuster_risk` — forecasted adjuster questions with suggested
+  pre-answers
+
+Each PDF carries the legal footer ("Documentation QA tool · Not a public
+adjuster · Findings based solely on uploaded materials").
 
 ## Positioning & legal
 

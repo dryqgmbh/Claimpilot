@@ -3,8 +3,10 @@ import { FileText, Download } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CLAIMS } from "@/lib/mock-data";
+import { listClaims } from "@/lib/store";
 import { formatDate } from "@/lib/utils";
+
+export const dynamic = "force-dynamic";
 
 const LABEL = {
   claim_qa: "Claim QA Report",
@@ -16,6 +18,7 @@ const LABEL = {
 } as const;
 
 export default function GlobalReportsPage() {
+  const CLAIMS = listClaims();
   const reports = CLAIMS.flatMap((c) =>
     c.reports.map((r) => ({ ...r, claim: c })),
   );

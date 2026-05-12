@@ -3,7 +3,7 @@ import { FileText, Download, AlertTriangle, ListChecks, FileSpreadsheet, Message
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getClaim } from "@/lib/mock-data";
+import { getClaimById as getClaim } from "@/lib/store";
 import { formatDate } from "@/lib/utils";
 
 const REPORT_TYPES = [
@@ -71,26 +71,41 @@ export default async function ReportsTab({
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        {REPORT_TYPES.map((r) => (
-          <Card key={r.kind} className="p-5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="grid h-10 w-10 place-items-center rounded-lg bg-brand-50 text-brand">
-                <r.icon className="h-5 w-5" />
+        {REPORT_TYPES.map((r) => {
+          const implemented =
+            r.kind === "claim_qa" ||
+            r.kind === "missing_docs" ||
+            r.kind === "adjuster_risk";
+          return (
+            <Card key={r.kind} className="p-5">
+              <div className="flex items-start justify-between gap-3">
+                <div className="grid h-10 w-10 place-items-center rounded-lg bg-brand-50 text-brand">
+                  <r.icon className="h-5 w-5" />
+                </div>
+                <Badge tone="muted">{r.audience}</Badge>
               </div>
-              <Badge tone="muted">{r.audience}</Badge>
-            </div>
-            <h3 className="mt-4 text-[15px] font-semibold">{r.title}</h3>
-            <p className="mt-1 text-[13px] text-app-muted">{r.desc}</p>
-            <div className="mt-4 flex gap-2">
-              <Button size="sm" className="gap-1.5">
-                <Download className="h-3.5 w-3.5" /> Generate PDF
-              </Button>
-              <Button variant="outline" size="sm">
-                Preview
-              </Button>
-            </div>
-          </Card>
-        ))}
+              <h3 className="mt-4 text-[15px] font-semibold">{r.title}</h3>
+              <p className="mt-1 text-[13px] text-app-muted">{r.desc}</p>
+              <div className="mt-4 flex gap-2">
+                {implemented ? (
+                  <a
+                    href={`/api/claims/${claim.id}/reports/${r.kind}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <Button size="sm" className="gap-1.5">
+                      <Download className="h-3.5 w-3.5" /> Download PDF
+                    </Button>
+                  </a>
+                ) : (
+                  <Button size="sm" disabled className="gap-1.5">
+                    <Download className="h-3.5 w-3.5" /> Coming in v1.1
+                  </Button>
+                )}
+              </div>
+            </Card>
+          );
+        })}
       </div>
 
       {claim.reports.length > 0 && (

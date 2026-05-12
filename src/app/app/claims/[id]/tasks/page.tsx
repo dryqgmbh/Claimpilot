@@ -3,7 +3,7 @@ import { Plus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getClaim } from "@/lib/mock-data";
+import { getClaimById as getClaim } from "@/lib/store";
 import { formatDate } from "@/lib/utils";
 import type { ClaimTask } from "@/types";
 
